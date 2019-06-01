@@ -49,7 +49,7 @@ public class PersonApi {
     @PatchMapping("/{id}")
     public ResponseEntity patch(@RequestBody Map<String, Object> updates, @PathVariable Long id) {
         log.info("patch({})...", updates);
-        service.updateOnly(id, updates);
+        service.updatePartial(id, updates);
         return ResponseEntity.noContent().build();
     }
 

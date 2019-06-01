@@ -55,22 +55,26 @@ public class PersonService {
             throw new NotFoundEntityException(String.format("Not found Person by id: %s", id));
         }
 
-        optionalPerson.get().setName(person.getName());
-        return repository.save(optionalPerson.get());
+        Person personUpdate = optionalPerson.get();
+        personUpdate.setName(person.getName());
+        personUpdate.setAddress(person.getAddress());
+        personUpdate.setPhone(person.getPhone());
+
+        return repository.save(personUpdate);
     }
 
-    public Person updateOnly(final Long id, Map<String, Object> updates) {
-        log.info("updateOnly({}, {})", id, updates);
+    public Person updatePartial(final Long id, Map<String, Object> updates) {
+        log.info("updatePartial({}, {})", id, updates);
         Optional<Person> optionalPerson = repository.findById(id);
         if (!optionalPerson.isPresent()) {
             throw new NotFoundEntityException(String.format("Not found Person by id: %s", id));
         }
 
-        Person personUpdate = optionalPerson.get();
-        UpdatePartialUtil.update(Person.class, personUpdate, updates);
-        validate(personUpdate);
+        Person personUpdatePartial = optionalPerson.get();
+        UpdatePartialUtil.update(Person.class, personUpdatePartial, updates);
+        validate(personUpdatePartial);
 
-        return repository.save(personUpdate);
+        return repository.save(personUpdatePartial);
     }
 
 

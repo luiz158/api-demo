@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.validation.ConstraintViolationException;
 import java.util.Date;
 
 
@@ -18,9 +19,16 @@ import java.util.Date;
 public class CustomHandleException extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({NotFoundEntityException.class})
-    public final ResponseEntity<ErrorResponse> handleInvalidRequestModeCardException(RuntimeException ex, WebRequest request) {
+    public final ResponseEntity<ErrorResponse> handleNotFoundEntityException(NotFoundEntityException ex, WebRequest request) {
         ErrorResponse errorResponse = new ErrorResponse(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+
+    @ExceptionHandler({ConstraintViolationException.class})
+    public final ResponseEntity<ErrorResponse> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse(new Date(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
 
