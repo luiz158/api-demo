@@ -2,7 +2,7 @@ FROM openjdk:8
 
 RUN echo "America/Sao_Paulo" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 
-COPY api-demo/target/api-demo*.jar /app/app.jar
+COPY api-demo*.jar /app/app.jar
 WORKDIR /app
 
 ARG PORT=8080

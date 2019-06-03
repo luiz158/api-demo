@@ -6,7 +6,7 @@ services:
             context: .
             dockerfile: Dockerfile
             args:
-                PORT: 8080
-                PROFILE: default
+                PORT: 9001
+                PROFILE: production
         ports:
-          - "8080:8080"
+          - "9001:9001"
